@@ -209,7 +209,7 @@ You should see output like the following:
 
 ```console
 NAME         TYPE          CLUSTER-IP      EXTERNAL-IP      PORT(S)         AGE
-test-vtgate  LoadBalancer  [`cluster_ip`]  [`external_ip`]  3306:32157/TCP  90s
+test-vtgate  LoadBalancer  [cluster_ip]    [external_ip]    3306:32157/TCP  90s
 ```
 
 It may take a few minutes for the load balancer to become available.
@@ -219,7 +219,7 @@ It may take a few minutes for the load balancer to become available.
 Use the IP from the previous step to connect to your Vitess database using a command like the following:
 
 ```console
-$ mysql -u user -h `external_ip` -p
+$ mysql -u user -h [external_ip] -p
 ```
 
 After entering your password (the default is `password` from the `exampledb.yaml` file), you can now submit queries against your Vitess database from your MySQL client.

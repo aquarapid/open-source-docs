@@ -132,6 +132,7 @@ $ kubectl get pods
 You should see output like this:
 
 ```console
+NAME                                                 READY   STATUS      RESTARTS   AGE
 example-90089e05-vitessbackupstorage-subcontroller   1/1     Running     0          44s
 example-etcd-faf13de3-1                              1/1     Running     0          44s
 example-etcd-faf13de3-2                              1/1     Running     0          44s
@@ -203,8 +204,8 @@ $ kubectl get service test-vtgate
 You should see output like the following:
 
 ```console
-NAME          TYPE           CLUSTER-IP      EXTERNAL-IP                                                              PORT(S)          AGE
-test-vtgate   LoadBalancer  [`cluster_ip`]  [`external_elb_name`]  3306:30481/TCP   59s
+NAME          TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)          AGE
+test-vtgate   LoadBalancer   [cluster_ip]    [elb_dns_name]  3306:30481/TCP   59s
 ```
 
 It may take a few minutes for the load balancer to become available.
@@ -214,7 +215,7 @@ It may take a few minutes for the load balancer to become available.
 Use the IP from the previous step to connect to your Vitess database using a command like the following:
 
 ```console
-$ mysql -u user -h `external_elb_name` -p
+$ mysql -u user -h [elb_dns_name] -p
 ```
 
 After entering your password (the default is `password` from the `exampledb_aws.yaml` file), you can now submit queries against your Vitess database from your MySQL client.
