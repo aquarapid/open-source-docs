@@ -73,7 +73,7 @@ priorityclass.scheduling.k8s.io/vitess-operator-control-plane created
 deployment.apps/vitess-operator created
 ```
 
-You can verify the status of the operator pods using the following command:
+You can verify the status of the operator pod using the following command:
 
 ```console
 $ kubectl get pods
@@ -83,27 +83,14 @@ You should see output like the following:
 
 ```console
 NAME							 READY	 STATUS	 RESTARTS AGE
-example-90089e05-vitessbackupstorage-subcontroller	 1/1	 Running 0	  59s
-example-etcd-faf13de3-1					 1/1	 Running 0	  59s
-example-etcd-faf13de3-2					 1/1	 Running 0	  59s
-example-etcd-faf13de3-3					 1/1	 Running 0	  59s
-example-uscentral1a-vtctld-6a268099-56c48bbc89-6r9dp	 1/1	 Running 2	  58s
-example-uscentral1a-vtgate-bbffae2f-54d5fdd79-gmwlm	 0/1	 Running 2	  54s
-example-uscentral1a-vtgate-bbffae2f-54d5fdd79-jldzg	 0/1	 Running 2	  54s
-example-vttablet-uscentral1a-0261268656-d6078140	 2/3	 Running 2	  58s
-example-vttablet-uscentral1a-1579720563-f892b0e6	 2/3	 Running 2	  59s
-example-vttablet-uscentral1a-2253629440-17557ac0	 2/3	 Running 2	  58s
-example-vttablet-uscentral1a-3067826231-d454720e	 2/3	 Running 2	  59s
-example-vttablet-uscentral1a-3815197730-f3886a80	 2/3	 Running 2	  58s
-example-vttablet-uscentral1a-3876690474-0ed30664	 2/3	 Running 2	  59s
 vitess-operator-6f54958746-mr9hp			 1/1	 Running 0	  17m
 ```
 
 ## Step 3. Edit the name of the Kubernetes secret in the database configuration file.
 
-This step is only necessary if you want to backup your database; for a quick test deployment, you can skip this step.
+This step is only necessary if you want to backup your database; for a quick test deployment, you can skip this step. If skipping this step, you need to remove the `spec.backup` section of your `exampledb.yaml` file.
 
-The exampledb.yaml file contains the name of the Kubernetes secret for your database:
+The `exampledb.yaml` file contains the name of the Kubernetes secret for your database:
 
 ```yaml
 # Version: 20200113
@@ -225,15 +212,17 @@ NAME         TYPE          CLUSTER-IP      EXTERNAL-IP      PORT(S)         AGE
 test-vtgate  LoadBalancer  [`cluster_ip`]  [`external_ip`]  3306:32157/TCP  90s
 ```
 
-## Step 9. Connect to your Vitess database using a MySQL client.                     
+It may take a few minutes for the load balancer to become available.
+
+## Step 9. Connect to your Vitess database using a MySQL client.
 
 Use the IP from the previous step to connect to your Vitess database using a command like the following:
 
 ```console
-$ mysql -u user -h `external_ip`
+$ mysql -u user -h `external_ip` -p
 ```
 
-You can now submit queries against your Vitess database from your MySQL client.
+After entering your password (the default is `password` from the `exampledb.yaml` file), you can now submit queries against your Vitess database from your MySQL client.
 
 For example, the following query displays the tables in your database with VSchemas:
 
